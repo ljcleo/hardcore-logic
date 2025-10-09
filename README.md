@@ -2,6 +2,8 @@
 
 <p align=center>【<a href="#">📊Leaderboard</a>】•【<a href="#">🗄️Dataset</a>】•【<a href="#">📄Paper</a>】•【<a href="https://github.com/ljcleo/hardcore-logic">💻Code</a>】</p>
 
+This is the codebase for _**HardcoreLogic: Challenging Large Reasoning Models with Long-tail Logic Puzzle Games**_.
+
 ## Requirements
 
 We recommend using [uv](https://docs.astral.sh/uv/) to setup a Python environment. Run `uv sync` under the project's root directory to create an environment same as the `uv.lock` file we provide.
@@ -9,6 +11,8 @@ We recommend using [uv](https://docs.astral.sh/uv/) to setup a Python environmen
 We use and recommend using [vLLM](https://docs.vllm.ai/en/stable/) to serve open source models, which provides powerful reasoning and structured output parsers that we rely on.
 
 ## Usage
+
+### Model Benchmarking
 
 Download the [dataset](#) and put all `.parquet` files in the `data` directory. Modify `config/api.json` to include API endpoints towards your model. Use `main.py` to generate outputs from your model and `evaluate.py` to evaluate them.
 
@@ -56,6 +60,10 @@ python evaluate.py zebra
 ```
 
 After running the evaluation script, use `stat/example.ipynb` to collect the results.
+
+### Data Generation
+
+We provide game generation scrips in `src/prepare` for reference. These scripts do not produce the dataset directly; instead, they generate logic games following the long-tail transformations we introduced in HardcoreLogic.
 
 ## Cite
 
