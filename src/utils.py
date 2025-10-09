@@ -12,6 +12,7 @@ def make_model(name: str, **kwargs: type):
         __module__=__name__,
         __validators__=None,
         __cls_kwargs__=None,
+        __qualname__=None,
         **kwargs,
     )
 

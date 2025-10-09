@@ -58,13 +58,13 @@ class Stat:
 
 
 def display_all_stats(
-    dataset: str, model_group: str, task_variants: Mapping[str, Iterable[str]] | None = None
+    dataset: str, run_group: str, task_variants: Mapping[str, Iterable[str]] | None = None
 ) -> None:
-    with open(f"./models/{model_group}.txt", encoding="utf8") as f:
-        models: tuple[str, ...] = tuple(r.strip() for r in f)
+    with open(f"./group/{run_group}.txt", encoding="utf8") as f:
+        run_names: tuple[str, ...] = tuple(r.strip() for r in f)
 
     groups: pd.Series = (
-        pd.read_csv(f"../prepare/list/{dataset}.csv")
+        pd.read_csv(f"../config/data/{dataset}.csv")
         .set_index("task")
         .apply(lambda s: f"{s['dataset']}--{s['group']}", axis=1)
     )
@@ -75,7 +75,7 @@ def display_all_stats(
             continue
 
         for variant in (task,) if task_variants is None else task_variants[task]:
-            stat: pd.DataFrame | None = Stat(variant, models)(dataset, groups[[task]])
+            stat: pd.DataFrame | None = Stat(variant, run_names)(dataset, groups[[task]])
 
             if stat is not None:
                 print(variant)

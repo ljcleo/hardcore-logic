@@ -125,7 +125,7 @@ class Main:
         retry_comp: bool,
     ) -> None:
         self.llm: LLM = LLM(
-            Path("./api_config.json"), api_list, api_rep, api_timeout, openai_mode, gemini_mode
+            Path("./config/api.json"), api_list, api_rep, api_timeout, openai_mode, gemini_mode
         )
 
         self.model: Model = MODELS[model_type](model, max_token, max_comp_token, temperature)

@@ -1,14 +1,61 @@
 # HardcoreLogic: Challenging Large Reasoning Models with Long-tail Logic Puzzle Games
 
-<p align=center>【<a href="#">📄Paper</a>】•【<a href="#">Dataset</a>】•【<a href="#">Leaderboard</a>】•【<a href="https://github.com/ljcleo/hardcore-logic">💻Code</a>】</p>
+<p align=center>【<a href="#">📊Leaderboard</a>】•【<a href="#">🗄️Dataset</a>】•【<a href="#">📄Paper</a>】•【<a href="https://github.com/ljcleo/hardcore-logic">💻Code</a>】</p>
 
 ## Requirements
 
 We recommend using [uv](https://docs.astral.sh/uv/) to setup a Python environment. Run `uv sync` under the project's root directory to create an environment same as the `uv.lock` file we provide.
 
-We use and recommend using [vllm](https://docs.vllm.ai/en/stable/) to serve open source models, which provides powerful reasoning and structured output parsers that we rely on.
+We use and recommend using [vLLM](https://docs.vllm.ai/en/stable/) to serve open source models, which provides powerful reasoning and structured output parsers that we rely on.
 
 ## Usage
+
+Download the [dataset](#) and put all `.parquet` files in the `data` directory. Modify `config/api.json` to include API endpoints towards your model. Use `main.py` to generate outputs from your model and `evaluate.py` to evaluate them.
+
+Example API config (see `src/llm_client` for available API types):
+
+```json
+{
+    "openai": {
+        "type": "openai",
+        "addr": null,
+        "ports": null,
+        "key": "sk-Y0urC1e!",
+        "proxy": "http://example.com:12345"
+    },
+    "local": {
+        "type": "openai-vllm",
+        "addr": "http://localhost",
+        "ports": [8000],
+        "key": "",
+        "proxy": null
+    },
+}
+```
+
+Example script that evaluates `gpt-oss-120b` (served on a local vLLM instance at `http://localhost:8000`) on the ZebraLogic task (see `src/model` for available model types):
+
+```bash
+# Generated output stored in output/zebra/hardcore_gpt-oss.jsonl
+python main.py \
+    --task zebra \
+    --sub-task hardcore \
+    --api local \
+    --model-type gpt-oss \
+    --model gpt-oss-120b \
+    --run-name gpt-oss \
+    --sample-rep 4 \
+    --max-token 32768 \
+    --max-comp-token 2048 \
+    --temperature 1 \
+    --seed 19260817 \
+    --api-rep 8 \
+
+# Evaluate specific runs: python evaluate.py zebra hardcore_gpt-oss [...]
+python evaluate.py zebra
+```
+
+After running the evaluation script, use `stat/example.ipynb` to collect the results.
 
 ## Cite
 
