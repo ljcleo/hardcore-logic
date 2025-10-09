@@ -1,0 +1,54 @@
+{% if prompt_example %}# Example Puzzle
+
+A 3x3 hitori puzzle is a cell grid with 3 rows and 3 columns.
+The goal is to erase certain cells so that the cells left in each row and in each column are unique.
+Erased cells cannot be 4-adjacent, and **all** non-erased cells must be 4-connected.
+A braced cell (`{x}`) cannot be erased, and no more than 3 of its 8-adjacent cells can be erased.
+
+## Example Puzzle
+ 1   1   3
+ 1   2   3
+ 2   3   3
+
+## Answer to the Example Puzzle
+[
+[true, false, true],
+[false, false, false],
+[false, false, true],
+]
+
+{% endif %}# Puzzle to Solve
+
+A {{ n }}x{{ n }} hitori puzzle is a cell grid with {{ n }} rows and {{ n }} columns.
+The goal is to erase certain cells so that the cells left in each row and in each column are unique.
+Erased cells cannot be 4-adjacent, and **all** non-erased cells must be 4-connected.
+A braced cell (`{x}`) cannot be erased, and no more than 3 of its 8-adjacent cells can be erased.{% if encrypted %}
+WARNING: The puzzle is encrypted into letters!
+In row i (from 1 to {{ n }}), a cell with number k now becomes `'A' + (i + k - 2) % {{ n }}`.
+For example, in row 1 `1` becomes `A`, but in row 2 `1` becomes `B` and `{{ n }}` becomes `A`.
+Decrypt the puzzle back to numbers before solving it.
+{% endif %}
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above hitori puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n) %}[{% for c in range(n) %}_{% if c < n - 1 %}, {% endif %}{% endfor %}]{% if r < n - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents whether the corresponding cell is **erased** (`true`) or not (`false`).

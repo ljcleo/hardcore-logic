@@ -1,0 +1,69 @@
+{% if prompt_example %}# Example Puzzle
+
+A 4x4 kakurasu puzzle is a cell grid with 4 rows and 4 columns.
+Rows are numbered 1 to 4 from top to bottom, and columns numbered 1 to 4 from left to right.
+The goal is to mark cells as `O` to satisfy the following column and row constraints.
+On top of the puzzle, a row of 4 numbers give the **column** constraints --- the row index sum of
+all cells **marked as `O`** in each column; a `-1` indicates that the column has no constraint.
+At the beginning of each row, a number gives the **row** constraint --- the column index sum of
+all cells **marked as `O`** in the row; a `-1` indicates that the row has no constraint.
+The initial grid consists of `.` and `X` cells, and only `.` cells can be marked as `O`;
+`X` cells **cannot** be marked as `O`.
+
+## Example Puzzle
+    1  3  2  5
+ 5| .  .  .  .
+ 3| .  .  .  .
+ 2| .  .  .  .
+ 4| .  .  .  .
+
+## Answer to the Example Puzzle
+[
+[true, false, false, true],
+[false, false, true, false],
+[false, true, false, false],
+[false, false, false, true]
+]
+
+### Explanation
+In the first row, cells at columns 1 and 4 are marked as `O`,
+so the column index sum is 5, matching the row hint number.
+In the second column, only the cell at row 3 is marked as `O`,
+so the row index sum is 3, matching the column hint number.
+
+{% endif %}# Puzzle to Solve
+
+A {{ n_row }}x{{ n_col }} kakurasu puzzle is a cell grid with {{ n_row }} rows and {{ n_col }} columns.
+Rows are numbered 1 to {{ n_row }}, and columns numbered 1 to {{ n_col }}.
+The goal is to mark cells to satisfy the following column and row constraints.
+On top of the puzzle, a row of {{ n_col }} numbers give the **column** constraints --- the row index sum of
+all cells **marked as `O`** in each column; a `-1` indicates that the column has no constraint.
+At the beginning of each row, a number gives the **row** constraint --- the column index sum of
+all cells **marked as `O`** in the row; a `-1` indicates that the row has no constraint.
+The initial grid consists of `.` and `X` cells, and only `.` cells can be marked as `O`;
+`X` cells **cannot** be marked as `O`.
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above kakurasu puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n_row) %}[{% for c in range(n_col) %}_{% if c < n_col - 1 %}, {% endif %}{% endfor %}]{% if r < n_row - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents whether the corresponding cell is
+**marked as `O`** (`true`) or not (`false`).

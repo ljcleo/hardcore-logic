@@ -1,0 +1,99 @@
+{% set vv = "height sum" if mode == "sum" else "`height*num_visible_cell_up_to_now` sum" if mode == "k-sum" else "count" %}{% if prompt_example %}# Example Puzzle
+
+A 4x4 skyscraper puzzle is a cell grid with 4 rows and 4 columns.
+Each cell contains exactly one of the numbers 1 to 4, representing the height of the cell.
+Each number must appear exactly once in every row and every column.
+Looking from a side, a cell in the front blocks **all** cells **behind** it that are **not taller**.
+The hint of a row/column/diagonal looking from a side is the {{ vv }} of cells
+in the row/column/diagonal that are not blocked; a number of `-1` means no constraint.
+On top of the puzzle, there is a row of 6 numbers:
+the first number is the hint of the main diagonal looking from top left;
+the next 4 numbers are the hints of the columns looking from the top;
+the last number is the hint of the sub diagonal looking from top right.
+Then, at the beginning of each grid row is the hint of that row looking from the left;
+at the end of that row is the hint of that row looking from the right.
+Finally, below the puzzle, there is a row of 6 numbers:
+the first number is the hint of the sub diagonal looking from bottom left;
+the next 4 numbers are the hints of the columns looking from the bottom;
+the last number is the hint of the main diagonal looking from bottom right.
+
+## Example Puzzle{% if mode == "sum" %}
+ 7| 7  4  5  9| 6
+ 7| .  .  .  .| 6
+ 9| .  .  .  .| 5
+ 4| .  .  .  .| 7
+10| .  .  .  .| 4
+ 5| 5  9  7  4| 4
+{% elif mode == "k-sum" %}
+11|11  4  9 20|10
+11| .  .  .  .|10
+20| .  .  .  .| 9
+ 4| .  .  .  .|11
+30| .  .  .  .| 4
+ 9| 9 20 11  4| 4
+{% else %}
+ 2| 2  1  2  3| 2
+ 2| .  .  .  .| 2
+ 3| .  .  .  .| 2
+ 1| .  .  .  .| 2
+ 4| .  .  .  .| 1
+ 2| 2  3  2  1| 1
+{% endif %}
+## Answer to the Example Puzzle
+[
+[3, 4, 1, 2],
+[2, 3, 4, 1],
+[4, 1, 2, 3],
+[1, 2, 3, 4]
+]
+
+### Explanation
+Looking at the second row from the left, we can see 2, 3 and 4, matching the hint number {% if mode == "sum" %}`9=2+3+4`{% elif mode == "k-sum" %}`20=2*1+3*2+4*3`{% else %}3{% endif %} on its left side.
+From the right we can see 1 and 4, matching the hint number {% if mode == "sum" %}`5=1+4`{% elif mode == "k-sum" %}`9=1*1+4*2`{% else %}2{% endif %} on its right side.
+Looking at the second column from the top, we can only see 4, matching the hint number {% if mode == "sum" %}4{% elif mode == "k-sum" %}`4=4*1`{% else %}1{% endif %} at its top.
+From the bottom we can see 2, 3 and 4, matching the hint number {% if mode == "sum" %}`9=2+3+4`{% elif mode == "k-sum" %}`20=2*1+3*2+4*3`{% else %}3{% endif %} at its bottom.
+Looking at the main diagonal from top left, we can see 3 and 4 (the second 3 is blocked), matching the hint number {% if mode == "sum" %}`7=3+4`{% elif mode == "k-sum" %}`11=3*1+4*2`{% else %}2{% endif %} at its top left.
+From bottom right, we can only see 4, matching the hint number {% if mode == "sum" %}4{% elif mode == "k-sum" %}`4=4*1`{% else %}1{% endif %} at its bottom right.
+
+{% endif %}# Puzzle to Solve
+
+A {{ n }}x{{ n }} skyscraper puzzle is a cell grid with {{ n }} rows and {{ n }} columns.
+Each cell contains exactly one of the numbers 1 to {{ n }}, representing the "height" of the cell.
+Each number must appear exactly once in every row and every column.
+Looking from a side, a cell in the front blocks **all** cells **behind** it that are **not taller**.
+The hint of a row/column/diagonal looking from a side is the {{ vv }} of cells
+in the row/column/diagonal that are not blocked; a number of `-1` means no constraint.
+On top of the puzzle, there is a row of {{ n + 2 }} numbers:
+the first number is the hint of the main diagonal looking from top left;
+the next {{ n }} numbers are the hints of the columns looking from the top;
+the last number is the hint of the sub diagonal looking from top right.
+Then, at the beginning of each grid row is the hint of that row looking from the left;
+at the end of that row is the hint of that row looking from the right.
+Finally, below the puzzle, there is a row of {{ n + 2 }} numbers:
+the first number is the hint of the sub diagonal looking from bottom left;
+the next {{ n }} numbers are the hints of the columns looking from the bottom;
+the last number is the hint of the main diagonal looking from bottom right.
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above skyscraper puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n) %}[{% for c in range(n) %}_{% if c < n - 1 %}, {% endif %}{% endfor %}]{% if r < n - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents the final number in the corresponding cell.

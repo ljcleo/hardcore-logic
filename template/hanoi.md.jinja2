@@ -1,0 +1,74 @@
+{% if prompt_example %}# Example Puzzle
+
+A 3x3 hanoi puzzle has 3 pegs and 3 disks.
+The disks, in the order of size, are: (smallest) `1`, `2`, `3` (largest).
+The goal is to transform the start state to the goal state in minimum number of steps.
+Each step moves a disk on top of a peg to another peg that is either empty,
+or whose current top disk is larger than the moved disk.{% if right_only %}
+Furthermore, the target peg must be to the right of the source peg.{% endif %}
+
+## Example Puzzle
+Start (bottom -> top):
+A | 2 1
+B |
+C | 3
+Goal (bottom -> top):
+A |
+B |
+C | 3 2 1
+
+## Answer to the Example Puzzle
+[
+["A", "B"], ["A", "C"], ["B", "C"]
+]
+
+### Explanation
+The first step moves the top disk of peg A (`1`) to peg B,
+which is valid because peg B is empty. The new state is:
+A | 2
+B | 1
+C | 3
+The second step moves the top disk of peg A (`2`) to peg C,
+which is valid because disk `2` is smaller than disk `3`. The new state is:
+A |
+B | 1
+C | 3 2
+The second step moves the top disk of peg B (`1`) to peg C,
+which is valid because disk `1` is smaller than disk `2`. The new state is:
+A |
+B |
+C | 3 2 1
+which is the goal state.
+
+{% endif %}# Puzzle to Solve
+
+A {{ n_peg }}x{{ n_disk }} hanoi puzzle has {{ n_peg }} pegs and {{ n_disk }} disks.
+The disks, in the order of size, are: (smallest) {% for c in order %}`{{ c }}`{% if not loop.last %}, {% endif %}{% endfor %} (largest).
+The goal is to transform the start state to the goal state in minimum number of steps.
+Each step moves a disk on top of a peg to another peg that is either empty,
+or whose current top disk is larger than the moved disk.{% if right_only %}
+Furthermore, the target peg must be to the right of the source peg.{% endif %}
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above hanoi puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+["_", "_"], ...
+]
+}
+
+where each `["_", "_"]` pair represents the source peg and the target peg of a disk-moving step.

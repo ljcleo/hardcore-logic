@@ -1,0 +1,88 @@
+{% if prompt_example %}# Example Puzzle
+
+An uppercase ASCII text is encrypted into a cipher.
+The goal is to recover the plain text, which may or may not have semantic meanings.
+A list of candidate encryption methods may be provided, one method per line,
+in which case the encryption is done by applying each method once sequentially
+{% if ordered %} in the given order{% else %}, but NOT necessarily in the given order{% endif %}.
+Sample plain text-cipher pairs that use the same encryption procedure may also be given as a hint.
+When "|" appears in the cipher, the encryption is segmented,
+where each encryption method consist of multiple sub-methods concatenated with "+" in one line,
+each applied to the corresponding cipher segment separated by "|".
+
+## Example Cipher 1
+
+Candidate methods:
+- Atbash cipher (A ↔ Z, B ↔ Y, ...)
+
+Encryption sample: (not available)
+
+Cipher: TDUIFLIMFHUXMPFXAMSP
+
+## Example Plain Text 1
+
+GWFRUORNUSFCNKUCZNHK
+
+### Explanation 1
+
+There is only one candidate encryption method (Atbash cipher),
+so the encryption is done by applying Atbash cipher once.
+Reverting the encryption on "TDUIFLIMFHUXMPFXAMSP" yields "GWFRUORNUSFCNKUCZNHK".
+
+## Example Cipher 2
+
+Candidate methods: (not available)
+
+Encryption sample:
+- DGOTRHSXBGWXYUYHFRMO -> WTLGISHCYTDCBFBSUINL
+
+Cipher: CNARJVPDFIBDVNKOXBLI
+
+## Example Plain Text 2
+
+XMZIQEKWURYWEMPLCYOR
+
+### Explanation 2
+
+No candidate encryption method is provided, however from the sample it can be deducted that
+the encryption method is Atbash cipher (A ↔ Z, B ↔ Y, ...), because
+applying Atbash cipher to "DGOTRHSXBGWXYUYHFRMO" gives "WTLGISHCYTDCBFBSUINL".
+Reverting "CNARJVPDFIBDVNKOXBLI" using this method yields "XMZIQEKWURYWEMPLCYOR".
+
+{% endif %}# Puzzle to Solve
+
+An uppercase ASCII text is encrypted into a cipher.
+The goal is to recover the plain text, which may or may not have semantic meanings.
+A list of candidate encryption methods may be provided, one method per line,
+in which case the encryption is done by applying each method once sequentially
+{% if ordered %} in the given order{% else %}, but NOT necessarily in the given order{% endif %}.
+Sample plain text-cipher pairs that use the same encryption procedure may also be given as a hint.
+When "|" appears in the cipher, the encryption is segmented,
+where each encryption method consist of multiple sub-methods concatenated with "+" in one line,
+each applied to the corresponding cipher segment separated by "|".{% if prompt_example %}
+**IMPORTANT: The encryption method may NOT be the same as in the examples!**
+**Use the information below (NOT the examples) to find out the actual encryption method!**{% endif %}
+
+## Cipher to Solve
+
+{{ puzzle }}
+
+# Instruction
+
+Now please recover the above cipher.
+If the cipher cannot be recovered, e.g. there is a contradiction in the clues,
+output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": "_"
+}
+
+where `"_"` represents the plain text string in uppercase.

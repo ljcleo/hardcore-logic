@@ -1,0 +1,70 @@
+{% if prompt_example %}# Example Puzzle
+
+A 4x4 sudoku puzzle is a cell grid with 4 rows and 4 columns.
+The grid is divided into 4 zones, each with 4 cells, outlined with `@`.
+Each cell contains exactly one of the 4 candidate elements: `1`, `2`, `3`, `4`.
+The goal is to fill all empty cells (denoted as `.`) with one of these elements.
+Each candidate element must appear exactly once in every row.
+Each candidate element must appear exactly once in every column.
+Each candidate element must appear exactly once in every zone.
+
+## Example Puzzle
+   a  b  c  d
+ @@@@@@@@@@@@@
+a@ .  4@ .  .@
+ @     @     @
+b@ .  .@ .  4@
+ @@@@@@@@@@@@@
+c@ 3  .@ .  .@
+ @     @     @
+d@ .  .@ 2  .@
+ @@@@@@@@@@@@@
+
+## Answer to the Example Puzzle
+[
+["1", "4", "3", "2"],
+["2", "3", "1", "4"],
+["3", "2", "4", "1"],
+["4", "1", "2", "3"]
+]
+
+{% endif %}# Puzzle to Solve
+{% set n = (subs | length) - 1 %}
+A(n) {{ n }}x{{ n }} sudoku puzzle is a cell grid with {{ n }} rows and {{ n }} columns.
+The grid is divided into {{ n }} zones, each with {{ n }} cells, outlined with `@`.
+Each cell contains exactly one of the {{ n }} candidate elements: {% for c in subs[1:] %}`{{ c }}`{% if not loop.last %}, {% endif %}{% endfor %}.
+The goal is to fill all empty cells (denoted as `.`) with one of these elements.
+Each candidate element must appear exactly once in every row.
+Each candidate element must appear exactly once in every column.
+Each candidate element must appear exactly once in every zone.{% if diag %}
+EXTRA: Each candidate element must appear exactly once in the two diagonals.{% endif %}{% if discon %}
+EXTRA: Adjacent cells cannot have adjacent elements, e.g., `{{ subs[2] }}` and `{{ subs[3] }}` cannot be next to each other.{% endif %}{% if irzone %}
+WARNING: Zones are NOT regular squares! Pay attention to their outlines!{% elif mc_box >= 0 %}
+EXTRA: The score of a zone is the sum of `cell_index*cell_value` of all cells in the zone,
+where cells are indexed as 1 to {{ n }} from left to right, from top to bottom;
+the complete puzzle should satisfy that zone {{ mc_box + 1 }} has the highest score,
+where zones are also indexed from 1 to {{ n }} from left to right, from top to bottom.{% endif %}
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above sudoku puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n) %}[{% for c in range(n) %}"_"{% if c < n - 1 %}, {% endif %}{% endfor %}]{% if r < n - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents the final element in the corresponding cell.

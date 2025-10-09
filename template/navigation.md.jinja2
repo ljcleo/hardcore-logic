@@ -1,0 +1,44 @@
+{% if prompt_example %}# Example Puzzle
+
+There is a set of roads and a set of landmarks.
+The start point is house C.
+There is a road which is 100 meters long from school X to cinema K.
+There is a road which is 400 meters long from house C to cinema K.
+There is a road which is 200 meters long from house C to school X.
+
+## Query for the Example Puzzle
+From the start point, how to reach the nearest cinema in the shortest way?
+
+## Answer to the Example Puzzle
+["C", "X", "K"]
+
+### Explanation
+
+There is only one cinema K.
+To go from the start point C to K, one can use the C-K road which is 400 meters long.
+One can also go to X first, then from X to K, where the total length is 100+200=300 meters long.
+So route CXK is shorter than CK.
+
+{% endif %}# Puzzle to Solve
+
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above puzzle.
+If there is no path, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": ["_", ...]
+}
+
+where each `"_"` represents a point on the path (an uppercase letter),
+including the start point and the end point.

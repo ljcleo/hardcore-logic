@@ -1,0 +1,9 @@
+{
+    "openai": {
+        "type": "openai",
+        "addr": null,
+        "ports": null,
+        "key": "sk-Y0urC1e!",
+        "proxy": null
+    }
+}

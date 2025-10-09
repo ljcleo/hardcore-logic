@@ -1,0 +1,55 @@
+{% if prompt_example %}# Example Puzzle
+
+A 4x4 binario puzzle is a cell grid with 4 rows and 4 columns.
+Each cell can either be `0` or `1`.
+The goal is to fill all empty cells (denoted as `.`) with `0` or `1`.
+Each row must have the same number of `0`s and `1`s.
+Each column must have the same number of `0`s and `1`s.
+Furthermore, no more than two identical digits are adjacent.
+
+## Example Puzzle
+0 0 1 .
+0 0 . .
+1 1 0 0
+1 1 0 0
+
+## Answer to the Example Puzzle
+[
+[0, 0, 1, 1],
+[0, 0, 1, 1],
+[1, 1, 0, 0],
+[1, 1, 0, 0],
+]
+
+{% endif %}# Puzzle to Solve
+
+A {{ n }}x{{ n }} binario puzzle is a cell grid with {{ n }} rows and {{ n }} columns.
+Each cell can either be `0` or `1`.
+The goal is to fill all empty cells (denoted as `.`) with `0` or `1`.
+Each row must have the same number of `0`s and `1`s.
+Each column must have the same number of `0`s and `1`s.
+Furthermore, no more than two identical digits are adjacent.
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above star battle puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n) %}[{% for c in range(n) %}_{% if c < n - 1 %}, {% endif %}{% endfor %}]{% if r < n - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents the final element in the corresponding cell.

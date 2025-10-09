@@ -1,0 +1,72 @@
+{% if prompt_example %}# Example Puzzle
+
+A 3x3 minesweeper puzzle is a cell grid with 3 rows and 3 columns.
+Each cell has either one mine (mine cell) or no mine (safe cell).
+Some safe cells are opened beforehand, showing the number of
+{% if regional %}**8-connected components** of {% endif %}mine cells in their 8-adjacent cells.{% if regional %}
+For example, if an opened safe cell has three 8-adjacent mine cells,
+but all three mine cells are 8-connected with each other,
+then the opened safe sell will show `1` instead of `3`.{% endif %}
+The goal is to find out all closed cells that must be mine cells.
+The puzzle is unsolvable if and only if the current numbers lead to a contradiction.
+
+## Example Puzzle{% if regional %}
+0 1 .
+1 3 .
+. . .
+{% else %}
+0 2 .
+1 3 .
+. . .
+{% endif %}
+## Answer to the Example Puzzle{% if regional %}
+[
+[false, false, true],
+[false, false, false],
+[true, false, true]
+]
+{% else %}
+[
+[false, false, true],
+[false, false, true],
+[false, false, false]
+]
+{% endif %}
+{% endif %}# Puzzle to Solve
+
+A {{ n_row }}x{{ n_col }} minesweeper puzzle is a cell grid with {{ n_row }} rows and {{ n_col }} columns.
+Each cell has either one mine (mine cell) or no mine (safe cell).
+Some safe cells are opened beforehand, showing the number of
+{% if regional %}**8-connected components** of {% endif %}mine cells in their 8-adjacent cells.{% if regional %}
+For example, if an opened safe cell has three 8-adjacent mine cells,
+but all three mine cells are 8-connected with each other,
+then the opened safe sell will show `1` instead of `3`.{% endif %}
+The goal is to find out all closed cells that must be mine cells.
+The puzzle is unsolvable if and only if the current numbers lead to a contradiction.{% if no_adj %}
+EXTRA: It is also guaranteed that no mines are 8-adjacent to each other.{% endif %}{% if letter %}
+EXTRA: The puzzle is encrypted into letters, where Z represents 0 and A-H represents 1-8.{% endif %}
+
+## Puzzle to Solve
+{{ puzzle }}
+
+# Instruction
+
+Now please solve the above minesweeper puzzle.
+If the puzzle is unsolvable, output `null` as the solution in the following json format:
+
+{
+"solvable": false,
+"solution": null
+}
+
+Otherwise, present your solution in the following json format:
+
+{
+"solvable": true,
+"solution": [
+{% for r in range(n_row) %}[{% for c in range(n_col) %}_{% if c < n_col - 1 %}, {% endif %}{% endfor %}]{% if r < n_row - 1 %},{% endif %}
+{% endfor %}]
+}
+
+where each `_` represents whether the corresponding cell
+**must be a mine cell** (`true`) or safe/undetermined (`false`).

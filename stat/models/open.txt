@@ -1,0 +1,13 @@
+gpt-oss
+deepseek-v3.1
+deepseek-r1
+deepseek-qwen
+qwen-next
+qwen3-235b
+qwen3-32b
+qwen3-30b-a3b
+qwen3-8b
+minimax-m1
+kimi-k2
+seed-oss
+glm-4.5
