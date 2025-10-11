@@ -223,3 +223,7 @@ output/
 prepare/*
 !prepare/src
 !prepare/README.md
+stat/*.ipynb
+!stat/example.ipynb
+stat/group/*
+!stat/group/example.txt

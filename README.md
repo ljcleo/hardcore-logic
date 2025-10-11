@@ -14,7 +14,7 @@ We use and recommend using [vLLM](https://docs.vllm.ai/en/stable/) to serve open
 
 ### Model Benchmarking
 
-Download the [dataset](#) and put all `.parquet` files in the `data` directory. Modify `config/api.json` to include API endpoints towards your model. Use `main.py` to generate outputs from your model and `evaluate.py` to evaluate them.
+Download the [dataset](#) and put all task directories with `.parquet` files in the `data` directory. Modify `config/api.json` to include API endpoints towards your model. Use `main.py` to generate outputs from your model and `evaluate.py` to evaluate them.
 
 Example API config (see `src/llm_client` for available API types):
 

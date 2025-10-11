@@ -62,8 +62,10 @@ class NavigationEvaluator(Evaluator):
             return False
 
         match = re.search(
-            "From the start point, how to reach ((?:a|the nearest) [a-z]+"
-            "(?: other than the start point)?(?:, and then a [a-z]+)*) in the shortest way\\?",
+            "From the start point, how to reach ("
+            "(?:a|the nearest) [a-z]+(?: other than the start point)?"
+            "(?:, and then a [a-z]+(?: other than the start point)?)*"
+            ") in the shortest way\\?",
             prompt,
         )
 
@@ -85,7 +87,11 @@ class NavigationEvaluator(Evaluator):
             if rp not in e_map:
                 return False
 
+            is_ckpt: bool = v_map[proposed_points[i]] == q_types[q_pivot]
+            if is_ckpt and q_pivot == 0 and proposed_points[i] == st_name:
+                return False
+
             len_proposal += e_map[rp]
-            q_pivot += v_map[proposed_points[i]] == q_types[q_pivot]
+            q_pivot += is_ckpt
 
         return q_pivot == len(q_types) and len_proposal <= len_route
