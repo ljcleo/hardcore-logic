@@ -1,3 +1,3 @@
 # Dataset
 
-[Download](#) all task directories with `.parquet` files and put them in this directory before evaluation.
+[Download](https://huggingface.co/datasets/xhWu-fd/HardcoreLogic) all directories with `.parquet` files and put them in this directory before evaluation.

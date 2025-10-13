@@ -9,8 +9,8 @@ from .task import TASKS
 
 @dataclass
 class Arguments:
+    split: str = ""
     task: str = ""
-    sub_task: str = ""
     api: list[str] = field(default_factory=list)
     model_type: str = ""
     model: str = ""
@@ -36,8 +36,8 @@ class Arguments:
     def parse() -> "Arguments":
         parser: ArgumentParser = ArgumentParser()
 
+        parser.add_argument("--split", type=str, required=True)
         parser.add_argument("--task", type=str, choices=TASKS.keys(), required=True, metavar="task")
-        parser.add_argument("--sub-task", type=str, required=True)
         parser.add_argument("--api", nargs="+", type=str, required=True)
 
         parser.add_argument(
