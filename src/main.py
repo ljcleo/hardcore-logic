@@ -24,8 +24,8 @@ class Main:
         self._init_processor(task=args.task)
 
         self._init_data(
+            split=args.split,
             task=args.task,
-            sub_task=args.sub_task,
             prompt_example=args.prompt_example,
             skip=args.skip,
             count=args.count,
@@ -50,7 +50,7 @@ class Main:
 
         self._init_output(
             task=args.task,
-            sub_task=args.sub_task,
+            sub_task=args.split,
             run_name=args.run_name,
             continue_task=args.continue_run,
         )
@@ -76,8 +76,8 @@ class Main:
     def _init_data(
         self,
         *,
+        split: str,
         task: str,
-        sub_task: str,
         prompt_example: bool,
         skip: int | None,
         count: int | None,
@@ -88,7 +88,7 @@ class Main:
                 Dataset,
                 load_dataset(
                     "parquet",
-                    data_files={"test": f"./data/{task}/{sub_task}.parquet"},
+                    data_files={"test": f"./data/{split}/{task}_{split}.parquet"},
                     split="test",
                     cache_dir=cache_dir,
                 ),
