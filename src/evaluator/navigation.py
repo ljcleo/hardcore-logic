@@ -58,7 +58,7 @@ class NavigationEvaluator(Evaluator):
         st_name: str = match.group(2)
         assert v_map.get(st_name, "") == st_type, idx
 
-        if proposed_points[0] != st_name:
+        if len(proposed_points) == 0 or proposed_points[0] != st_name:
             return False
 
         match = re.search(
