@@ -1,6 +1,6 @@
 # HardcoreLogic: Challenging Large Reasoning Models with Long-tail Logic Puzzle Games
 
-<p align=center>【<a href="https://huggingface.co/spaces/JunsWan/HardcoreLogic">📊Leaderboard</a>】•【<a href="https://huggingface.co/datasets/xhWu-fd/HardcoreLogic">🗄️Dataset</a>】•【<a href="#">📄Paper</a>】•【<a href="https://github.com/ljcleo/hardcore-logic">💻Code</a>】</p>
+<p align=center>【<a href="https://huggingface.co/spaces/JunsWan/HardcoreLogic">📊Leaderboard</a>】•【<a href="https://huggingface.co/datasets/xhWu-fd/HardcoreLogic">🗄️Dataset</a>】•【<a href="https://arxiv.org/abs/2510.12563">📄Paper</a>】•【<a href="https://github.com/ljcleo/hardcore-logic">💻Code</a>】</p>
 
 This is the codebase for _**HardcoreLogic: Challenging Large Reasoning Models with Long-tail Logic Puzzle Games**_.
 
