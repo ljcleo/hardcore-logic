@@ -68,4 +68,11 @@ We provide game generation scrips in `src/prepare` for reference. These scripts 
 ## Cite
 
 ```bibtex
+@inproceedings{liang2026hardcorelogic,
+title={HardcoreLogic: Challenging Large Reasoning Models with Long-tail Logic Puzzle Games},
+author={Jingcong Liang and Shijun Wan and Xuehai Wu and Yitong Li and Qianglong Chen and Duyu Tang and Siyuan Wang and zhongyu wei},
+booktitle={The Fourteenth International Conference on Learning Representations},
+year={2026},
+url={https://openreview.net/forum?id=8USxc43D3I}
+}
 ```
